@@ -17,9 +17,9 @@ import com.fuli.web.common.exception.BaseRuntimeException;
 import com.fuli.web.common.utils.MapParameterUtil;
 import com.fuli.web.common.utils.SignUtil;
 import com.fuli.web.common.utils.StringUtil;
-import com.fuli.web.pojo.InterPojo;
-import com.fuli.web.pojo.InterfaceInfo;
-import com.fuli.web.service.main.InterfaceService;
+import com.fuli.web.dao.InterDao;
+import com.fuli.web.dao.UserDao;
+import com.fuli.web.pojo.InterInfo;
 
 /**
  * @author chenjh
@@ -32,14 +32,12 @@ public class InterfaceInterceptor implements HandlerInterceptor {
 	private Log log = LogFactory.getLog(InterfaceInterceptor.class);
 	
 	@Autowired
-	private InterfaceService interfaceService;
-
+	private InterDao interDao;
+	
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
 		// request 里可以获取参数
 		String url = request.getRequestURI();
-//		String path = request.getContextPath();
-		
 		boolean isLogin = false;
 		
 		if (url.indexOf("login") > 0) {
@@ -49,8 +47,7 @@ public class InterfaceInterceptor implements HandlerInterceptor {
 		//写日志
 		log.error(" InterfaceInterceptor 拦截到的url = " + url);
 		//参数检查
-//		checkGlobalParames(request.getParameterMap(),isLogin);
-//		checkRights(request.getParameterMap(),url);
+		checkGlobalParames(request.getParameterMap(),isLogin);
 		return true;
 	}
 
@@ -67,13 +64,13 @@ public class InterfaceInterceptor implements HandlerInterceptor {
 	private void checkGlobalParames(Map<String, String[]> map,boolean isLogin) {
 		if (null == map || map.size() <= 0 )
 			throw new BaseRuntimeException(InterfaceCodeMsg.INTERFACE_ERROR_CODE);
-		//参数转换成对象
-		InterPojo inter = (InterPojo)MapParameterUtil.convertMapToBean(new InterPojo(), map);
+		//获取token对象
+		String token = map.get("token")[0];
 		//令牌
-		if(!checkAccessKey(inter.getAccessKey()))
+		if(!checkAccessKey(token))
 			throw new BaseRuntimeException(InterfaceCodeMsg.INTER_TOKEN_ERROR_CODE);
 		//签名
-		if(!isLogin && null == inter.getWeip() || !SignUtil.checkSign(map, "weip"))
+		if(!isLogin && null == token || !SignUtil.checkSign(map, "weip"))
 			throw new BaseRuntimeException(InterfaceCodeMsg.INTER_SIGN_ERROR_CODE);
 		
 	}
@@ -88,12 +85,12 @@ public class InterfaceInterceptor implements HandlerInterceptor {
 	 * @return boolean 
 	 * @说明  代码版权归 杭州艮山网络科技有限公司 所有
 	 */
-	private boolean checkAccessKey(String accessKey){
-		String key = (String)CacheContext.get(accessKey);
+	private boolean checkAccessKey(String token){
+		String key = (String)CacheContext.get(token);
 		if(StringUtil.isEmpty(key)){
-			InterfaceInfo w = interfaceService.queryByAccessKey(accessKey);
+			InterInfo w = interDao.selectByToken(token);
 			if(null != w)
-				CacheContext.set(accessKey, w.getAccount());
+				CacheContext.set(token, w.getProject());
 			else
 				return false;
 		}else 

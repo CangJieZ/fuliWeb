@@ -53,7 +53,7 @@ public class InterfaceCodeMsg {
 	 * 用户不存在或密码错误
 	 */
 	public static String USER_LOGIN_ERROR_CODE = "-1001";
-
+	
 	/**
 	 * 插入失败
 	 */
@@ -111,6 +111,11 @@ public class InterfaceCodeMsg {
 	 */
 	public static final String CASE_NO_IS_NULL = "-8991";
 	
+	/**
+	 * 用户已经注册过了
+	 */
+	public static String ALREADY_REGISTER = "--8990";
+	
 	static {
 
 		mapCode.put(SUCCESS_CODE, "操作成功");
@@ -127,6 +132,7 @@ public class InterfaceCodeMsg {
 		mapCode.put(NO_USER, "用户账号不存在");
 		mapCode.put(ERROR_PWD, "密码错误");
 		mapCode.put(LOGIN_OUT, "登录超时");
+		mapCode.put(ALREADY_REGISTER, "该账户已经存在");
 
 		mapCode.put(COMPANY_ID_IS_NULL, "管理员企业Id不能为空 ");
 		mapCode.put(USER_ID_IS_NULL, "userId 不能为空 ");

@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.fuli.web.common.InterfaceCodeMsg;
 import com.fuli.web.common.utils.StringUtil;
-import com.fuli.web.pojo.BaseModel;
 import com.fuli.web.pojo.GsonModel;
-import com.fuli.web.pojo.PageInfo;
 
-public class BaseController<T extends BaseModel> implements Serializable {
+public class BaseController<T> implements Serializable {
 
 	/**
 	 * @Fields serialVersionUID
@@ -85,27 +83,7 @@ public class BaseController<T extends BaseModel> implements Serializable {
 	 * @return
 	 */
 	public GsonModel getSuccessResultGson(List<T> list) {
-		List<BaseModel> listBase = new ArrayList<BaseModel>();
-		listBase.addAll(list);
-		GsonModel gson = new GsonModel();
-		gson.setCode(InterfaceCodeMsg.SUCCESS_CODE);
-		gson.setMsg(InterfaceCodeMsg.mapCode.get(InterfaceCodeMsg.SUCCESS_CODE));
-		gson.setContent(listBase);
-		return gson;
-	}
-	
-	/**
-	 * @Auther: zhuwt  
-	 * @Description: 分页查询 带分页总数 
-	 * @Date:2016年8月23日上午10:22:17
-	 * @param list
-	 * @param pageInfo
-	 * @return  
-	 * @return GsonModel 
-	 * @说明  代码版权归 杭州山网络科技有限公司 所有
-	 */
-	public GsonModel getSuccessResultGson(List<T> list, PageInfo pageInfo) {
-		List<BaseModel> listBase = new ArrayList<BaseModel>();
+		List<T> listBase = new ArrayList<T>();
 		listBase.addAll(list);
 		GsonModel gson = new GsonModel();
 		gson.setCode(InterfaceCodeMsg.SUCCESS_CODE);
@@ -114,7 +92,6 @@ public class BaseController<T extends BaseModel> implements Serializable {
 		return gson;
 	}
 
-	
 	public GsonModel getSuccessResultGson(GsonModel gson) {
 		if (StringUtil.isEmpty(gson.getCode())) {
 			gson.setCode(InterfaceCodeMsg.SUCCESS_CODE);
@@ -122,6 +99,7 @@ public class BaseController<T extends BaseModel> implements Serializable {
 		gson.setMsg(InterfaceCodeMsg.mapCode.get(gson.getCode()));
 		return gson;
 	}
+
 	/**
 	 * 成功返回数据
 	 * 
@@ -129,7 +107,7 @@ public class BaseController<T extends BaseModel> implements Serializable {
 	 * @return
 	 */
 	public GsonModel getSuccessResultGson(T t) {
-		List<BaseModel> listBase = new ArrayList<BaseModel>();
+		List<T> listBase = new ArrayList<T>();
 		listBase.add(t);
 		GsonModel gson = new GsonModel();
 		gson.setCode(InterfaceCodeMsg.SUCCESS_CODE);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fuli.web.dao.InterInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fuli.web.pojo.InterInfo" >
+    <id column="inter_id" property="interId" jdbcType="INTEGER" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    inter_id, token, project
+  </sql>
+   <select id="selectByToken" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from inter
+    where token = #{token,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from inter
+    where inter_id = #{interId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from inter
+    where inter_id = #{interId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fuli.web.pojo.InterInfo" >
+    insert into inter (inter_id, token, project
+      )
+    values (#{interId,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fuli.web.pojo.InterInfo" >
+    insert into inter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="interId != null" >
+        inter_id,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="interId != null" >
+        #{interId,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fuli.web.pojo.InterInfo" >
+    update inter
+    <set >
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where inter_id = #{interId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fuli.web.pojo.InterInfo" >
+    update inter
+    set token = #{token,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR}
+    where inter_id = #{interId,jdbcType=INTEGER}
+  </update>
+</mapper>
