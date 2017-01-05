@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fuli.web.dao.gif.GifDao" >
+  <resultMap id="BaseResultMap" type="com.fuli.web.pojo.GifInfo" >
+    <id column="gif_id" property="gifId" jdbcType="INTEGER" />
+    <result column="designation" property="designation" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gif_id, designation, path
+  </sql>
+  
+  <!-- 分页查询 -->
+	<select id="selectAll" parameterType="com.fuli.web.pojo.GifInfo"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		gif
+		limit
+		#{startRow:INTEGER},#{pageSize:INTEGER}
+	</select>
+  
+  <!-- 查询总数 -->
+	<select id="selectCount" parameterType="com.fuli.web.pojo.GifInfo"
+		resultType="java.lang.Integer">
+		SELECT
+		count(*)
+		FROM
+		gif
+	</select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gif
+    where gif_id = #{gifId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gif
+    where gif_id = #{gifId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fuli.web.pojo.GifInfo" >
+    insert into gif (gif_id, designation, path
+      )
+    values (#{gifId,jdbcType=INTEGER}, #{designation,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fuli.web.pojo.GifInfo" >
+    insert into gif
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gifId != null" >
+        gif_id,
+      </if>
+      <if test="designation != null" >
+        designation,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gifId != null" >
+        #{gifId,jdbcType=INTEGER},
+      </if>
+      <if test="designation != null" >
+        #{designation,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fuli.web.pojo.GifInfo" >
+    update gif
+    <set >
+      <if test="designation != null" >
+        designation = #{designation,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gif_id = #{gifId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fuli.web.pojo.GifInfo" >
+    update gif
+    set designation = #{designation,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR}
+    where gif_id = #{gifId,jdbcType=INTEGER}
+  </update>
+</mapper>

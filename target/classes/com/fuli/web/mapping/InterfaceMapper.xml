@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fuli.web.dao.main.InterfaceDao" >
+
+  <resultMap id="BaseResultMap" type="com.fuli.web.pojo.InterfaceInfo" >
+    <id column="fuli_id" property="fuliId" jdbcType="INTEGER" />
+    <result column="access_key" property="accessKey" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="weip_name" property="weipName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    fuli_id, access_key, account, pwd, add_time, modify_time, weip_name
+  </sql>
+  
+  
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from weip
+   
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from weip
+    where fuli_id = #{fuliId,jdbcType=INTEGER}
+  </select>
+  
+  
+   <select id="queryByAccessKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from weip
+    where access_key = #{accessKey,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weip
+    where fuli_id = #{fuliId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.weip.law.pojo.WeipInfo" >
+    insert into weip (fuli_id, access_key, account, 
+      pwd, add_time, modify_time, 
+      weip_name)
+    values (#{fuliId,jdbcType=INTEGER}, #{accessKey,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{weipName,jdbcType=VARCHAR})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.weip.law.pojo.WeipInfo" >
+    insert into weip
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fuliId != null" >
+        fuli_id,
+      </if>
+      <if test="accessKey != null" >
+        access_key,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="weipName != null" >
+        weip_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fuliId != null" >
+        #{fuliId,jdbcType=INTEGER},
+      </if>
+      <if test="accessKey != null" >
+        #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weipName != null" >
+        #{weipName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.weip.law.pojo.WeipInfo" >
+    update weip
+    <set >
+      <if test="accessKey != null" >
+        access_key = #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weipName != null" >
+        weip_name = #{weipName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fuli_id = #{fuliId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.weip.law.pojo.WeipInfo" >
+    update weip
+    set access_key = #{accessKey,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      weip_name = #{weipName,jdbcType=VARCHAR}
+    where fuli_id = #{fuliId,jdbcType=INTEGER}
+  </update>
+</mapper>
