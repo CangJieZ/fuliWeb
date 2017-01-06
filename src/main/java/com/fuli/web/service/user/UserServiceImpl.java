@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fuli.web.common.Constants;
 import com.fuli.web.common.InterfaceCodeMsg;
+import com.fuli.web.common.utils.DateTimeUtil;
 import com.fuli.web.dao.UserDao;
 import com.fuli.web.pojo.GsonModel;
 import com.fuli.web.pojo.UserInfo;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
 			return model;
 		} else {
 			try {
+				user.setAddTime(DateTimeUtil.getCurrDate());
 				int result = userDao.insert(user);
 				if (result < 0) {
 					model.setCode(Constants.FAIL_SUCCESS);
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
 					model.setContent(list);
 				}
 			} catch (Exception e) {
-				model.setCode(Constants.FAIL_SUCCESS);
+				model.setCode(InterfaceCodeMsg.FAIL_INSERT);
 			}
 		}
 		return model;

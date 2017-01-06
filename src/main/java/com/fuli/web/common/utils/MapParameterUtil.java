@@ -9,6 +9,7 @@
  */
 package com.fuli.web.common.utils;
 
+import java.awt.List;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

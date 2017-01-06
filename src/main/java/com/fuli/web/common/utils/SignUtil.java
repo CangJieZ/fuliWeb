@@ -31,7 +31,7 @@ public class SignUtil {
 		boolean result = false;
 		try {
 			String paramStr = MapParameterUtil.getParametStringArray(map,excludeParams);
-			String oldSign = map.get("weip")[0];
+			String oldSign = map.get("fuli")[0];
 			String newSign = MD5Util.Md5(paramStr, "utf-8");
 			result = oldSign.equals(newSign);
 		} catch (Exception e) {

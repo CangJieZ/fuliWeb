@@ -12,7 +12,7 @@ package com.fuli.web.common;
 public class Constants {
 
 	public static final String INSERT_SUCCESS = "插入成功";
-	public static final String FAIL_SUCCESS = "添加成功";
+	public static final String FAIL_SUCCESS = "添加失败";
 	
 	//缓存过期时间
 	public static final int OUT_DATE_TIME = 1000 * 60 * 30;

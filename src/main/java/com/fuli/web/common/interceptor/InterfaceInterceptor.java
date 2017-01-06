@@ -14,11 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fuli.web.common.InterfaceCodeMsg;
 import com.fuli.web.common.context.CacheContext;
 import com.fuli.web.common.exception.BaseRuntimeException;
-import com.fuli.web.common.utils.MapParameterUtil;
 import com.fuli.web.common.utils.SignUtil;
 import com.fuli.web.common.utils.StringUtil;
 import com.fuli.web.dao.InterDao;
-import com.fuli.web.dao.UserDao;
 import com.fuli.web.pojo.InterInfo;
 
 /**
@@ -70,7 +68,7 @@ public class InterfaceInterceptor implements HandlerInterceptor {
 		if(!checkAccessKey(token))
 			throw new BaseRuntimeException(InterfaceCodeMsg.INTER_TOKEN_ERROR_CODE);
 		//签名
-		if(!isLogin && null == token || !SignUtil.checkSign(map, "weip"))
+		if(!isLogin && null == token || !SignUtil.checkSign(map, "fuli"))
 			throw new BaseRuntimeException(InterfaceCodeMsg.INTER_SIGN_ERROR_CODE);
 		
 	}
