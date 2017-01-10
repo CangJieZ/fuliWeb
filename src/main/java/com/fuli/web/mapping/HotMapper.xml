@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fuli.web.dao.HotDao">
+	<resultMap id="BaseResultMap" type="com.fuli.web.pojo.HotInfo">
+		<id column="hot_id" property="hotId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="link" property="link" jdbcType="VARCHAR" />
+		<result column="describe" property="describe" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		hot_id, title, link, describe
+	</sql>
+	
+	<!-- 分页查询所有 -->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="com.fuli.web.pojo.HotInfo">
+		select
+		*
+		from hot
+		limit
+		#{startPage:INTEGER},#{pageSize:INTEGER}
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="com.fuli.web.pojo.HotInfo">
+		select
+		count(*)
+		from hot
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from hot
+		where hot_id = #{hotId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from hot
+		where hot_id = #{hotId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.fuli.web.pojo.HotInfo">
+		insert into hot (hot_id, title, link,
+		describe)
+		values (#{hotId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+		#{link,jdbcType=VARCHAR},
+		#{describe,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.fuli.web.pojo.HotInfo">
+		insert into hot
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hotId != null">
+				hot_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="link != null">
+				link,
+			</if>
+			<if test="describe != null">
+				describe,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hotId != null">
+				#{hotId,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				#{link,jdbcType=VARCHAR},
+			</if>
+			<if test="describe != null">
+				#{describe,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fuli.web.pojo.HotInfo">
+		update hot
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				link = #{link,jdbcType=VARCHAR},
+			</if>
+			<if test="describe != null">
+				describe = #{describe,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where hot_id = #{hotId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fuli.web.pojo.HotInfo">
+		update hot
+		set title = #{title,jdbcType=VARCHAR},
+		link = #{link,jdbcType=VARCHAR},
+		describe = #{describe,jdbcType=VARCHAR}
+		where hot_id = #{hotId,jdbcType=INTEGER}
+	</update>
+</mapper>
