@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fuli.web.common.Constants;
 import com.fuli.web.common.InterfaceCodeMsg;
+import com.fuli.web.common.context.CacheContext;
+import com.fuli.web.common.exception.BOException;
 import com.fuli.web.common.utils.DateTimeUtil;
+import com.fuli.web.common.utils.MD5Util;
 import com.fuli.web.dao.UserDao;
 import com.fuli.web.pojo.GsonModel;
 import com.fuli.web.pojo.UserInfo;
@@ -44,6 +48,25 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return model;
+	}
+
+	@Override
+	public GsonModel login(UserInfo user) {
+		GsonModel gsonModel = new GsonModel();
+		UserInfo userInfo = userDao.selectByPhone(user.getPhone());
+		if (null == userInfo) {
+			//不存在此用户
+			gsonModel.setCode(InterfaceCodeMsg.NO_USER);
+			return gsonModel;
+		}
+		if (!user.getPwd().equals(userInfo.getPwd())) {
+			gsonModel.setCode(InterfaceCodeMsg.ERROR_PWD);
+			return gsonModel;
+		}
+		List<UserInfo> list = new ArrayList<UserInfo>();
+		list.add(userInfo);
+		gsonModel.setContent(list);
+		return gsonModel;
 	}
 
 }

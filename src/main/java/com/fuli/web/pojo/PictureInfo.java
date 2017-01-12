@@ -1,11 +1,11 @@
 package com.fuli.web.pojo;
 
-public class PictureInfo {
+public class PictureInfo extends BaseInfo{
     private Integer pictureId;
 
     private String title;
 
-    private String describe;
+    private String introduce;
 
     private String link;
 
@@ -32,16 +32,16 @@ public class PictureInfo {
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
     }
+    
+    public String getIntroduce() {
+		return introduce;
+	}
 
-    public String getDescribe() {
-        return describe;
-    }
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
 
-    public void setDescribe(String describe) {
-        this.describe = describe == null ? null : describe.trim();
-    }
-
-    public String getLink() {
+	public String getLink() {
         return link;
     }
 

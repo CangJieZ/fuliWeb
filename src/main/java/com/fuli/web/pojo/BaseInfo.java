@@ -1,5 +1,10 @@
 package com.fuli.web.pojo;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.fuli.web.common.Constants;
+
+@JsonIgnoreProperties(value = { "pageSize", "startPage"})
 public class BaseInfo {
 
 	Integer startPage;
@@ -19,7 +24,7 @@ public class BaseInfo {
 
 	public Integer getPageSize() {
 		if (null == startPage) {
-			return 10;
+			return Constants.PAGE_SIZE;
 		}
 		return pageSize;
 	}

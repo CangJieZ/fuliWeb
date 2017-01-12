@@ -1,5 +1,7 @@
 package com.fuli.web.dao;
 
+import java.util.List;
+
 import com.fuli.web.pojo.PictureInfo;
 
 public interface PictureDao {
@@ -14,4 +16,8 @@ public interface PictureDao {
     int updateByPrimaryKeySelective(PictureInfo record);
 
     int updateByPrimaryKey(PictureInfo record);
+    
+    List<PictureInfo> selectAll(PictureInfo record);
+    
+    Integer selectCount(PictureInfo record);
 }

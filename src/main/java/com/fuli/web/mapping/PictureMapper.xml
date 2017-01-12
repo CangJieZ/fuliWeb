@@ -1,128 +1,148 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fuli.web.dao.PictureDao" >
-  <resultMap id="BaseResultMap" type="com.fuli.web.pojo.PictureInfo" >
-    <id column="picture_id" property="pictureId" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="describe" property="describe" jdbcType="VARCHAR" />
-    <result column="link" property="link" jdbcType="VARCHAR" />
-    <result column="local_path" property="localPath" jdbcType="VARCHAR" />
-    <result column="source" property="source" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="size" property="size" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    picture_id, title, describe, link, local_path, source, type, size
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from picture
-    where picture_id = #{pictureId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from picture
-    where picture_id = #{pictureId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.fuli.web.pojo.PictureInfo" >
-    insert into picture (picture_id, title, describe, 
-      link, local_path, source, 
-      type, size)
-    values (#{pictureId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
-      #{link,jdbcType=VARCHAR}, #{localPath,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{size,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.fuli.web.pojo.PictureInfo" >
-    insert into picture
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="pictureId != null" >
-        picture_id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="describe != null" >
-        describe,
-      </if>
-      <if test="link != null" >
-        link,
-      </if>
-      <if test="localPath != null" >
-        local_path,
-      </if>
-      <if test="source != null" >
-        source,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="size != null" >
-        size,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="pictureId != null" >
-        #{pictureId,jdbcType=INTEGER},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="describe != null" >
-        #{describe,jdbcType=VARCHAR},
-      </if>
-      <if test="link != null" >
-        #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="localPath != null" >
-        #{localPath,jdbcType=VARCHAR},
-      </if>
-      <if test="source != null" >
-        #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="size != null" >
-        #{size,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fuli.web.pojo.PictureInfo" >
-    update picture
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="describe != null" >
-        describe = #{describe,jdbcType=VARCHAR},
-      </if>
-      <if test="link != null" >
-        link = #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="localPath != null" >
-        local_path = #{localPath,jdbcType=VARCHAR},
-      </if>
-      <if test="source != null" >
-        source = #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="size != null" >
-        size = #{size,jdbcType=INTEGER},
-      </if>
-    </set>
-    where picture_id = #{pictureId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fuli.web.pojo.PictureInfo" >
-    update picture
-    set title = #{title,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
-      link = #{link,jdbcType=VARCHAR},
-      local_path = #{localPath,jdbcType=VARCHAR},
-      source = #{source,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      size = #{size,jdbcType=INTEGER}
-    where picture_id = #{pictureId,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.fuli.web.dao.PictureDao">
+	<resultMap id="BaseResultMap" type="com.fuli.web.pojo.PictureInfo">
+		<id column="picture_id" property="pictureId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="introduce" property="introduce" jdbcType="VARCHAR" />
+		<result column="link" property="link" jdbcType="VARCHAR" />
+		<result column="local_path" property="localPath" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="size" property="size" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		picture_id, title, introduce, link, local_path, source, type, size
+	</sql>
+
+	<select id="selectAll" resultMap="BaseResultMap"
+		parameterType="com.fuli.web.pojo.PictureInfo">
+		select
+		*
+		from picture
+		limit
+		#{startPage:INTEGER},#{pageSize:INTEGER}
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer"
+		parameterType="com.fuli.web.pojo.PictureInfo">
+		select
+		count(*)
+		from picture
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from picture
+		where picture_id = #{pictureId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from picture
+		where picture_id = #{pictureId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.fuli.web.pojo.PictureInfo">
+		insert into picture (picture_id, title, introduce,
+		link, local_path, source,
+		type, size)
+		values (#{pictureId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+		#{introduce,jdbcType=VARCHAR},
+		#{link,jdbcType=VARCHAR}, #{localPath,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER}, #{size,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.fuli.web.pojo.PictureInfo">
+		insert into picture
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pictureId != null">
+				picture_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="introduce != null">
+				introduce,
+			</if>
+			<if test="link != null">
+				link,
+			</if>
+			<if test="localPath != null">
+				local_path,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="size != null">
+				size,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pictureId != null">
+				#{pictureId,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				#{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				#{link,jdbcType=VARCHAR},
+			</if>
+			<if test="localPath != null">
+				#{localPath,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="size != null">
+				#{size,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fuli.web.pojo.PictureInfo">
+		update picture
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				introduce = #{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="link != null">
+				link = #{link,jdbcType=VARCHAR},
+			</if>
+			<if test="localPath != null">
+				local_path = #{localPath,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				source = #{source,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="size != null">
+				size = #{size,jdbcType=INTEGER},
+			</if>
+		</set>
+		where picture_id = #{pictureId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fuli.web.pojo.PictureInfo">
+		update picture
+		set title = #{title,jdbcType=VARCHAR},
+		introduce = #{introduce,jdbcType=VARCHAR},
+		link = #{link,jdbcType=VARCHAR},
+		local_path = #{localPath,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		size = #{size,jdbcType=INTEGER}
+		where picture_id = #{pictureId,jdbcType=INTEGER}
+	</update>
 </mapper>

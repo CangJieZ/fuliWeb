@@ -16,4 +16,6 @@ public class Constants {
 	
 	//缓存过期时间
 	public static final int OUT_DATE_TIME = 1000 * 60 * 30;
+	
+	public static final int PAGE_SIZE = 20;
 }
